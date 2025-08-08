@@ -22,32 +22,10 @@
             ];
 
             shellHook = ''
-              set -euo pipefail
-              echo "✅ Dev shell Python para ${system} pronto."
-              echo "• python: $(python3 --version 2>/dev/null || true) | uv: $(uv --version 2>/dev/null || true) | ruff: $(ruff --version 2>/dev/null || true)"
-              # datadog-ci (for repo metadata uploads)
-              if ! command -v datadog-ci >/dev/null 2>&1; then
-                echo "➡️  Instalando @datadog/datadog-ci via npm (global no devShell)…"
-                npm install -g @datadog/datadog-ci >/dev/null 2>&1 || echo "⚠️  Falha ao instalar datadog-ci; verifique o npm/node"
-              fi
-              command -v datadog-ci >/dev/null 2>&1 && datadog-ci --version || true
-              if [ -f pyproject.toml ] || [ -f requirements.txt ]; then
-                if [ ! -d .venv ]; then
-                  echo "➡️  Criando .venv com uv…"
-                  uv venv --python="$(command -v python3)" .venv
-                fi
-                source .venv/bin/activate
-                # Sincroniza dependências só na primeira vez neste diretório
-                if [ -f pyproject.toml ]; then
-                  echo "➡️  uv sync (pyproject.toml)…"
-                  uv sync
-                elif [ -f requirements.txt ]; then
-                  echo "➡️  uv pip install -r requirements.txt…"
-                  uv pip install -r requirements.txt
-                fi
-              fi
-
-              echo "🟢 Ambiente pronto. Use 'deactivate' para sair da venv, 'exit' para sair do devShell."
+              echo "Dev shell - ${system}"
+              echo "python: $(python3 --version 2>/dev/null || true)"
+              echo "uv: $(uv --version 2>/dev/null || true)"
+              echo "ruff: $(ruff --version 2>/dev/null || true)"
             '';
           };
         });
@@ -63,7 +41,7 @@
               neovim
               aws-vault
               kubernetes-helm
-              direnv
+              # direnv
               imagemagick
               wget
               # pandoc
@@ -74,7 +52,7 @@
               # need python
               awscli2
               ansible
-              google-cloud-sdk
+              # google-cloud-sdk
             ];
           };
         });
