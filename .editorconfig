@@ -1,0 +1,32 @@
+# EditorConfig padrão para projetos Nix
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Regras para arquivos Nix
+[*.nix]
+indent_style = space
+indent_size = 2
+max_line_length = 80
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Markdown: evitar trim em linhas com dois espaços (quebras manuais)
+[*.md]
+trim_trailing_whitespace = false
+indent_style = space
+indent_size = 2
+
+# YAML / YML
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
