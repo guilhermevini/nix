@@ -15,31 +15,43 @@
           pkgs = import nixpkgs { inherit system; };
         in {
           default = pkgs.mkShell {
+            name = "guilherme-python";
             buildInputs = with pkgs; [
-              bat
-              neovim
-              awscli2
-              aws-vault
-              uv                # package manager para Python
-              ruff              # linter
-              kubernetes-helm   # (alias de 'helm' em alguns canais)
-              python313
-              direnv
-              google-cloud-sdk
-              imagemagick
-              wget
-              pandoc
-              tectonic
-              ansible
-              graphviz
+              uv
+              ruff
             ];
 
-            # opcional: ajuda no shell
             shellHook = ''
-              echo "✅ Dev shell para ${system} pronto."
-              echo "• python: $(python3 --version) | uv: $(uv --version || true)"
-              echo "• helm: $(helm version --short || true)"
+              echo "✅ Dev shell Python para ${system} pronto."
+              echo "• python: $(python3 --version 2>/dev/null || true) | uv: $(uv --version 2>/dev/null || true) | ruff: $(ruff --version 2>/dev/null || true)"
             '';
+          };
+        });
+
+      packages = forAllSystems (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in {
+          world = pkgs.buildEnv {
+            name = "guilherme-world";
+            paths = with pkgs; [
+              bat
+              neovim
+              aws-vault
+              kubernetes-helm
+              direnv
+              imagemagick
+              wget
+              # pandoc
+              # tectonic
+              # graphviz
+              # requirements
+              python313
+              # need python
+              awscli2
+              ansible
+              google-cloud-sdk
+            ];
           };
         });
     };
